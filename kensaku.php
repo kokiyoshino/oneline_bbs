@@ -3,7 +3,7 @@
 <head>
 	<!--htmlファイルの情報（画面に表示されない）-->
     <meta charset="UTF-8">
-    <title>検索</title>
+    <title>検索!</title>
 </head>
 <body>
 	<?php
