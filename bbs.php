@@ -28,6 +28,16 @@
 
   }
 
+  if (!empty($_POST) && isset($_POST['delete'])) {
+
+      // $sql = sprintf('DELETE FROM posts WHERE id ='?'');
+
+      // $stmt = $dbh->prepare($sql);
+      // $stmt->execute();
+
+
+  }
+
       $sql= 'SELECT * FROM `posts`';
       $sql= 'SELECT * FROM `posts` ORDER BY id DESC'; 
     //SELECT文実行
@@ -73,7 +83,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>セブ掲示版</title>
+  <title>Cebu Life</title>
 
   <!-- CSS -->
   <link rel="stylesheet" href="assets/css/bootstrap.css">
@@ -94,7 +104,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#page-top"><span class="strong-title"><i class="fa fa-linux"></i> Oneline bbs</span></a>
+              <a class="navbar-brand" href="#page-top"><span class="strong-title"><i class="fa fa-comment"></i> Cebu life </span></a>
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -165,6 +175,16 @@
 
                     <h2><a href="#"><?php echo $post_each['nickname']; ?></a> <span><?php echo $post_each['created'];?></span></h2>
                     <p><?php echo $post_each['comment'];?></p>
+                    <br />
+                    <form>
+                      <?php
+                        echo $post_each['id'];
+                        echo sprintf('<input type="hidden" name="delete" value="%s" />', $post_each['id']);
+                        echo '<input type="submit" value="削除" />';
+                      ?>
+                    </form>      
+
+                  
                 </div>
             </div>
 

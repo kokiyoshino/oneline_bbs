@@ -87,7 +87,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>〜セブ掲示版〜</title>
+  <title>Cebu Life</title>
 
 </head>
 <body>
