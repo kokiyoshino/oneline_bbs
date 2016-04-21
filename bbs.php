@@ -186,9 +186,23 @@
                   <div class="timeline-label">
                     
 
-                    <h2><a href="#"><?php echo $post_each['nickname']; ?></a> <span><?php echo $post_each['created'];?></span></h2>
+                    <h2>
+                      <a href="#"><?php echo $post_each['nickname']; ?></a>
+                      
+                      <?php
+                        //一旦日時型に変換（string型からdatetime型へ変換）
+                        $created=strtotime($post_each['created']);
+                        //書式を変換
+                        $created=date('Y年m月d日 H時i分s秒',$created);
+                      ?>
+                      <!-- // <span><?php echo $post_each['created'];?></span> -->
+                      <span><?php echo $created;?></span>
+
+
+
+                    </h2>
                     <p><?php echo $post_each['comment'];?></p>
-                    <a onclick= "return confirm('本当に削除しますか？')" href="bbs.php?action=delete&id="<?php echo $post_each['id']; ?> style="position: absolute; right: 10px; bottom: 10px;"><i class= "fa fa-trash fa-lg"></i></a>
+                    <a onclick= "return confirm('本当に削除しますか？');" href="bbs.php?action=delete&id="<?php echo $post_each['id']; ?> style="position: absolute; right: 10px; bottom: 10px;"><i class= "fa fa-trash fa-lg"></i></a>
                     <br />
                     <!-- <form>
                       <?php
@@ -198,7 +212,7 @@
                         // echo <
 
                       ?> -->
-                    </form>      
+                    <!-- </form>      --> 
 
                   
                 </div>
