@@ -1,26 +1,39 @@
 <?php
+
+    require('dbconnect.php');
     // $dsn ='mysql:dbname=oneline_bbs;host=localhost';
 
     // // 接続するためのユーザー情報
     // $user ='root';
     // $password = '';
 
-    $dsn ='mysql:dbname=LAA0731408-onelinebbs;host=mysql110.phy.lolipop.lan';
+    // $dsn ='mysql:dbname=LAA0731408-onelinebbs;host=mysql110.phy.lolipop.lan';
 
-    // 接続するためのユーザー情報
-    $user ='LAA0731408';
-    $password = '1365HAdK';
+    // // 接続するためのユーザー情報
+    // $user ='LAA0731408';
+    // $password = '1365HAdK';
 
 
-    // DB接続オブジェクトを作成 （オブジェクト指向）
-    $dbh = new PDO($dsn,$user,$password);
+    // // DB接続オブジェクトを作成 （オブジェクト指向）
+    // $dbh = new PDO($dsn,$user,$password);
 
-    // 接続したDBオブジェクトで文字コードutf8を使うように指定
-    $dbh->query('SET NAMES utf8');
+    // // 接続したDBオブジェクトで文字コードutf8を使うように指定
+    // $dbh->query('SET NAMES utf8');
+
+
+    //削除ボタンが押されたときの処理
+    if (isset ($_GET['action'])&&($_GET['action']=='delete')){
+      $deletesql= sprintf('DELETE FROM `posts` WHERE `id` =%s',$_GET['id']);
+
+      //DELETE文実行
+      $stmt = $dbh->prepare($deletesql);
+      $stmt->execute();  
+
+
+    }
 
     if(isset($_POST) && !empty($_POST))
   {
-
       $sql = sprintf('INSERT INTO posts (nickname,comment,created) VALUES(\'%s\',\'%s\',now())',$_POST['nickname'],$_POST['comment']);
 
       $stmt = $dbh->prepare($sql);
@@ -28,7 +41,7 @@
 
   }
 
-  if (!empty($_POST) && isset($_POST['delete'])) {
+  // if (!empty($_POST) && isset($_POST['delete'])) {
 
       // $sql = sprintf('DELETE FROM posts WHERE id ='?'');
 
@@ -36,7 +49,7 @@
       // $stmt->execute();
 
 
-  }
+  // }
 
       $sql= 'SELECT * FROM `posts`';
       $sql= 'SELECT * FROM `posts` ORDER BY id DESC'; 
@@ -46,7 +59,7 @@
 
 
     //格納する変数の初期化  
-      $post = array();
+      $posts = array();
 
 
     while (1)
@@ -175,13 +188,16 @@
 
                     <h2><a href="#"><?php echo $post_each['nickname']; ?></a> <span><?php echo $post_each['created'];?></span></h2>
                     <p><?php echo $post_each['comment'];?></p>
+                    <a onclick= "return confirm('本当に削除しますか？')" href="bbs.php?action=delete&id="<?php echo $post_each['id']; ?> style="position: absolute; right: 10px; bottom: 10px;"><i class= "fa fa-trash fa-lg"></i></a>
                     <br />
-                    <form>
+                    <!-- <form>
                       <?php
-                        echo $post_each['id'];
-                        echo sprintf('<input type="hidden" name="delete" value="%s" />', $post_each['id']);
-                        echo '<input type="submit" value="削除" />';
-                      ?>
+                        // echo $post_each['id'];
+                        // echo sprintf('<input type="hidden" name="delete" value="%s" />', $post_each['id']);
+                        // echo '<input type="submit" value="削除" />';
+                        // echo <
+
+                      ?> -->
                     </form>      
 
                   
