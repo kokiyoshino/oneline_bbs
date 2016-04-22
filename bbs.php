@@ -23,14 +23,38 @@
 
     //削除ボタンが押されたときの処理
     if (isset ($_GET['action'])&&($_GET['action']=='delete')){
-      $deletesql= sprintf('DELETE FROM `posts` WHERE `id` =%s',$_GET['id']);
+      //$deletesql= sprintf('DELETE FROM `posts` WHERE `id` =%s',$_GET['id']);
+
+      //論理削除
+      //Update文
+
+      $deletesql= sprintf('UPDATE `posts` SET `delete_flag`=1 WHERE`id`=%s',$_GET['id']);
+      //delete文実行
 
       //DELETE文実行
       $stmt = $dbh->prepare($deletesql);
-      $stmt->execute();  
+      $stmt->execute(); 
 
+      header('Location:bbs.php');
 
     }
+
+
+        //likeが押されたときの処理
+      if (isset ($_GET['action'])&&($_GET['action']=='like')){
+      
+      //update文でlikeの数をカウントアップ（インクリメント）
+      $likesql= sprintf('UPDATE `posts` SET `likes`=`likes`+ 1 WHERE `id`=%s',$_GET['id']);
+      var_dump($likesql);
+
+      //update文を実行
+      $stmt = $dbh->prepare($likesql);
+      $stmt->execute(); 
+
+      header('Location:bbs.php');
+      }
+
+
 
     if(isset($_POST) && !empty($_POST))
   {
@@ -39,6 +63,8 @@
       $stmt = $dbh->prepare($sql);
       $stmt->execute();
 
+      //処理の再実行を防ぐために、自画面へリダイレクト（画面移動）
+      header('Lcation:bbs.php');
   }
 
   // if (!empty($_POST) && isset($_POST['delete'])) {
@@ -51,8 +77,8 @@
 
   // }
 
-      $sql= 'SELECT * FROM `posts`';
-      $sql= 'SELECT * FROM `posts` ORDER BY id DESC'; 
+      // $sql= 'SELECT * FROM `posts`';
+      $sql= 'SELECT * FROM `posts` where delete_flag = 0 ORDER BY id DESC'; 
     //SELECT文実行
       $stmt = $dbh->prepare($sql);
       $stmt->execute();
@@ -104,7 +130,7 @@
   <link rel="stylesheet" href="assets/css/form.css">
   <link rel="stylesheet" href="assets/css/timeline.css">
   <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="stylesheet" href="./delete.css">
+  <link rel="stylesheet" href="assets/css/delete.css">
 </head>
 <body>
 
@@ -203,7 +229,8 @@
 
                     </h2>
                     <p><?php echo $post_each['comment'];?></p>
-                    <a onclick= "return confirm('本当に削除しますか？');" href="bbs.php?action=delete&id="<?php echo $post_each['id']; ?> class="delete"><i class= "fa fa-trash fa-lg"></i></a>
+                    <a href="bbs.php?action=like&id=<?php echo $post_each['id']; ?>"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like<?php echo $post_each['likes']; ?> </a>
+                    <a onclick= "return confirm('本当に削除しますか？');" href="bbs.php?action=delete&id=<?php echo $post_each['id']; ?>" class="trash"><i class= "fa fa-trash fa-lg"></i></a>
                     <br />
                     <!-- <form>
                       <?php

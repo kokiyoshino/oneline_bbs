@@ -4,8 +4,8 @@
 	// $user = 'root';
 	 //    $password = '';
 	 //    $dbh = new PDO($dsn,$user,$password);
-	// $dbh = new PDO('mysql:dbname=LAA0731408-onelinebbs;host=localhost', 'root', '');
-    // $dbh -> query('SET NAMES utf8');
+	// $dbh = new PDO('mysql:dbname=LAA0731408-onelinebbs;host=localhost','root', '');
+ //    $dbh -> query('SET NAMES utf8');
     
 
     //ロリポップのデータベースに接続
